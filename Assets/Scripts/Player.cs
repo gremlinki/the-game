@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     float movementSpeed = 10;
 
     [SerializeField] Collider2D itemPickupArea;
-    [SerializeField] private Camera camera;
     CItemWrapper currentItem; // Current item the player is looking at
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
@@ -41,6 +40,7 @@ public class Player : MonoBehaviour
                 currentItem = null;
             }
         }
+
         if (Input.anyKey)
         {
             // On any key input && if list open == true zamyka list 'bezpowrotnie'
