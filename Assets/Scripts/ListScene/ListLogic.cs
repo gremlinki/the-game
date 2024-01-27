@@ -7,6 +7,7 @@ using ItemSystem;
 public class ListLogic : MonoBehaviour
 {
     public bool isListOpen = true;
+    public GameObject ListOBJ;
     public Player MC;
 
     GameManager gameManager;
@@ -38,6 +39,13 @@ public class ListLogic : MonoBehaviour
                     itemTxtLoader(ItemsOnMap[i].name, ItemNames[j], ItemsOnMap[i].GetComponent<CItemWrapper>().NobleNumber, ItemsOnMap[i].GetComponent<CItemWrapper>().KingNumber, ItemsOnMap[i].GetComponent<CItemWrapper>().PSYNumber, ItemRELNames[j]);
                 }
             }
+        }
+
+        if(isListOpen == true){
+            ListOBJ.SetActive(true);
+        }
+        else {
+            ListOBJ.SetActive(false);
         }
     }
 
