@@ -47,7 +47,7 @@ public class MenuLogic : MonoBehaviour
     }
 
     public void Play(){
-        SceneManager.LoadScene("Demo");
+        SceneManager.LoadScene("Game");
     }
 
     public void Options(){

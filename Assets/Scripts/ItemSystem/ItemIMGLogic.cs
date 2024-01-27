@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using ItemSystem;
 
 public class ItemIMGLogic : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class ItemIMGLogic : MonoBehaviour
     public GameObject item_2;
     public GameObject item_3;
     //logic if(item 1 number = 2 { grafika = szpadel})
-    public int Item_1_Number;
-    public int Item_2_Number;
-    public int Item_3_Number;
+    //public string Item_1_Number;
+    //public string Item_2_Number;
+    //public string Item_3_Number;
     // sptite none ma być pusty
     private Sprite sprNone;
     public Sprite Carrot;
@@ -23,51 +24,59 @@ public class ItemIMGLogic : MonoBehaviour
     public Sprite Apple;
     public Sprite Book;
     public Sprite Hammer;
+
+    GameManager gameManager;
+    private CItem[] itemList;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameManager.instance;
+        itemList = gameManager.InventoryManager.items();
     }
 
     // Update is called once per frame
     void Update()
     {
-        itemImgLoader(Item_1_Number,item_1);
-        itemImgLoader(Item_2_Number,item_2);
-        itemImgLoader(Item_3_Number,item_3);
+        if(itemList[0] != null)
+            itemImgLoader(itemList[0].name,item_1);
+        if(itemList[1] != null)
+            itemImgLoader(itemList[1].name,item_2);
+        if(itemList[2] != null)
+            itemImgLoader(itemList[2].name,item_3);
     }
 
-    void itemImgLoader(int x, GameObject y){
+    void itemImgLoader(string x, GameObject y){
         switch(x){
-            case 0:
-                y.GetComponent<Image>().sprite = sprNone;
-                break;
-            case 1:
+            case "Carrot":
                 y.GetComponent<Image>().sprite = Carrot;
                 break;
-            case 2:
+            case "Shovel":
                 y.GetComponent<Image>().sprite = Shovel;
                 break;
-            case 3:
+            case "Sword":
                 y.GetComponent<Image>().sprite = Sword;
                 break;
-            case 4:
+            case "Shield":
                 y.GetComponent<Image>().sprite = Shield;
                 break;
-            case 5:
+            case "Coat of Arms":
                 y.GetComponent<Image>().sprite = Coat_of_arms;
                 break;
-            case 6:
+            case "Beer Mug":
                 y.GetComponent<Image>().sprite = BeerMug;
                 break;
-            case 7:
+            case "Apple":
                 y.GetComponent<Image>().sprite = Apple;
                 break;
-            case 8:
+            case "Book":
                 y.GetComponent<Image>().sprite = Book;
                 break;
-            case 9:
+            case "Hammer":
                 y.GetComponent<Image>().sprite = Hammer;
+                break;
+            default:
+                y.GetComponent<Image>().sprite = sprNone;
                 break;
         }
     }
