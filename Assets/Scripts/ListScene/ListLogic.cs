@@ -18,42 +18,62 @@ public class ListLogic : MonoBehaviour
     public GameObject[] Psycha_Items = new GameObject[three];
     public GameObject[] ItemsOnMap;
     public string[] ItemNames = new string[9]; //{"Carrot","Shovel","Sword","Shield","Coat of Arms","Beer Mug","Apple","Book","Hammer"};
-    public Sprite[] ItemRELNames = new Sprite[0];
+    public Sprite[] ItemRELNames = new Sprite[9];
+    public Sprite SPRnone;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.instance;
         itemList = gameManager.InventoryManager.items();
-
-        if (ItemsOnMap == null)
-            ItemsOnMap = GameObject.FindGameObjectsWithTag("Item");
+        ItemsOnMap = GameObject.FindGameObjectsWithTag("Item");
+        //Debug.Log(ItemNames.Length);
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i <= ItemsOnMap.Length; i++){
-            for(int j = 0; j <= ItemNames.Length; j++){
-                for(int o = 0; o <= ItemNames.Length; o++){
-                    if(ItemsOnMap[i] != null){
-                        itemTxtLoader(ItemsOnMap[i].name, ItemNames[j], 1, 0, 0, Szlachta_Items, ItemRELNames[o]);
-                    }
+        for(int i = 0; i < ItemsOnMap.Length; i++){
+            for(int j = 0; j < ItemRELNames.Length; j++){
+                if(ItemsOnMap[i] != null){
+                    itemTxtLoader(ItemsOnMap[i].name, ItemNames[j], ItemsOnMap[i].GetComponent<CItemWrapper>().NobleNumber, ItemsOnMap[i].GetComponent<CItemWrapper>().KingNumber, ItemsOnMap[i].GetComponent<CItemWrapper>().PSYNumber, ItemRELNames[j]);
                 }
             }
         }
     }
 
-    void itemTxtLoader(string x, string accualX,int SzlachtaOPT, int KingOPT, int MentalOPT, GameObject[] y, Sprite accualIMG){
-        foreach(GameObject obj in y){
-            if (x == accualX){
-                if(SzlachtaOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
+    void itemTxtLoader(string x, string accualX,int SzlachtaOPT, int KingOPT, int MentalOPT, Sprite accualIMG){
+        if (x == accualX){
+            if(SzlachtaOPT > 0){
+                if (Szlachta_Items[0].GetComponent<Image>().sprite == SPRnone){
+                    Szlachta_Items[0].GetComponent<Image>().sprite = accualIMG;
                 }
-                if(KingOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
+                else if (Szlachta_Items[1].GetComponent<Image>().sprite == SPRnone && Szlachta_Items[0].GetComponent<Image>().sprite != accualIMG){
+                    Szlachta_Items[1].GetComponent<Image>().sprite = accualIMG;
                 }
-                if(MentalOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
+                else if (Szlachta_Items[2].GetComponent<Image>().sprite == SPRnone && Szlachta_Items[0].GetComponent<Image>().sprite != accualIMG && Szlachta_Items[1].GetComponent<Image>().sprite != accualIMG){
+                    Szlachta_Items[2].GetComponent<Image>().sprite = accualIMG;
+                }
+            }
+            if(KingOPT > 0){
+                if (Krol_Items[0].GetComponent<Image>().sprite == SPRnone){
+                    Krol_Items[0].GetComponent<Image>().sprite = accualIMG;
+                }
+                else if (Krol_Items[1].GetComponent<Image>().sprite == SPRnone && Krol_Items[0].GetComponent<Image>().sprite != accualIMG){
+                    Krol_Items[1].GetComponent<Image>().sprite = accualIMG;
+                }
+                else if (Krol_Items[2].GetComponent<Image>().sprite == SPRnone && Krol_Items[0].GetComponent<Image>().sprite != accualIMG && Krol_Items[1].GetComponent<Image>().sprite != accualIMG){
+                    Krol_Items[2].GetComponent<Image>().sprite = accualIMG;
+                }
+            }
+            if(MentalOPT > 0){
+                if (Psycha_Items[0].GetComponent<Image>().sprite == SPRnone){
+                    Psycha_Items[0].GetComponent<Image>().sprite = accualIMG;
+                }
+                else if (Psycha_Items[1].GetComponent<Image>().sprite == SPRnone && Psycha_Items[0].GetComponent<Image>().sprite != accualIMG){
+                    Psycha_Items[1].GetComponent<Image>().sprite = accualIMG;
+                }
+                else if (Psycha_Items[2].GetComponent<Image>().sprite == SPRnone && Psycha_Items[0].GetComponent<Image>().sprite != accualIMG && Psycha_Items[1].GetComponent<Image>().sprite != accualIMG){
+                    Psycha_Items[2].GetComponent<Image>().sprite = accualIMG;
                 }
             }
         }

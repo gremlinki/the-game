@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ItemSystem;
 
@@ -42,11 +39,12 @@ public class Player : MonoBehaviour
             if (currentItem)
             {
                 Debug.Log("Item picked up");
-                gameManager.InventoryManager.addItem(currentItem.item(), 0); // <-- TO CHANGE, currently picks up to slot zero
+                gameManager.InventoryManager.addItem(currentItem.item);
                 Destroy(currentItem.gameObject);
                 currentItem = null;
             }
         }
+
         if (Input.anyKey)
         {
             // On any key input && if list open == true zamyka list 'bezpowrotnie'
