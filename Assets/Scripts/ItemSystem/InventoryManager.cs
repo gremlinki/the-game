@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ItemSystem
 {
@@ -19,7 +20,9 @@ namespace ItemSystem
             {
                 if (m_pItems[i] != null) continue;
                 m_pItems[i] = pItem.copy();
+                break;
             }
+            Debug.Log(m_pItems[0]);
         }
 
         public void removeItem(int nSlot)
