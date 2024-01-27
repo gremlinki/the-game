@@ -68,7 +68,7 @@ namespace ItemSystem
             m_nSelfDepravation = obj.selfDepravation;
             m_eGroup = obj.group;
         }
-
+        
         public override string ToString()
         {
             return $"{name()} {description()} {group} {m_pItemDef.id}";
