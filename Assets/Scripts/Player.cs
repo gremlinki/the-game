@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,8 +55,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CItemWrapper item = collision.gameObject.GetComponent<CItemWrapper>();
-        if (!item)
-            return;
+        if (!item) return;
 
         currentItem = item;
         pickupWindow.SetActive(true);
@@ -64,6 +64,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        CItemWrapper item = collision.gameObject.GetComponent<CItemWrapper>();
+        if (!item) return;
+        
         currentItem = null;
         pickupWindow.SetActive(false);
     }

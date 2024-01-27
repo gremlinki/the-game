@@ -5,32 +5,48 @@ namespace ItemSystem
 {
     public class CInventoryManager
     {
-        private static readonly int MAX_SLOT = 3;
+        private const int MAX_SLOT = 3;
         private CItem[] m_pItems = new CItem[MAX_SLOT];
-        private int m_nCurrentSlot = 0;
         
         public CItem[] items()
         {
             return m_pItems;
         }
 
-        public void addItem(CItem pItem, int nSlot)
+        public bool addItem(CItem pItem, int nSlot)
         {
             // Slot already occupied
-            if (m_pItems[nSlot] != null) return;
+            if (m_pItems[nSlot] != null) return false;
             m_pItems[nSlot] = pItem.copy();
+            return true;
         }
 
-        public void removeItem(int nSlot)
+        /// <summary>
+        /// Add a item to first free slot
+        /// </summary>
+        /// <param name="pItem"></param>
+        public bool addItem(CItem pItem)
         {
-            if (nSlot < 0 || nSlot >= MAX_SLOT) return;
+            for (int i = 0; i < MAX_SLOT; i++)
+            {
+                if (m_pItems[i] != null) continue;
+                m_pItems[i] = pItem;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool removeItem(int nSlot)
+        {
+            if (nSlot < 0 || nSlot >= MAX_SLOT) return false;
             m_pItems[nSlot] = null;
+            return true;
         }
 
         public CItem getItem(int nSlot)
         {
             if (nSlot < 0 || nSlot >= MAX_SLOT) return null;
-            m_nCurrentSlot = nSlot;
             return m_pItems[nSlot];
         }
     }
