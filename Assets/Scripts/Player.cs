@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
 
+    // list z opisami itemów
+    bool isListOpen = true;
+
     new Rigidbody2D rigidbody;  
 
     // Start is called before the first frame update
@@ -40,16 +43,27 @@ public class Player : MonoBehaviour
                 currentItem = null;
             }
         }
+        if (Input.anyKey)
+        {
+            // On any key input && if list open == true zamyka list 'bezpowrotnie'
+            if (isListOpen == true)
+            {
+                isListOpen = false;
+            }
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //Movement:
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
-        input = input.normalized;
-        rigidbody.velocity = input * movementSpeed;
+        if (isListOpen == false)
+        {
+            input.x = Input.GetAxisRaw("Horizontal");
+            input.y = Input.GetAxisRaw("Vertical");
+            input = input.normalized;
+            rigidbody.velocity = input * movementSpeed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
