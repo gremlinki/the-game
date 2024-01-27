@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private GameManager()
     {
         InventoryManager = new CInventoryManager();
-        
     }
 
     private void Awake()

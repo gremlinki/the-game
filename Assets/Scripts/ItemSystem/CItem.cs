@@ -8,12 +8,24 @@ namespace ItemSystem
         ROYALTY
     }
     
-    public class CItem
+    public class CItem : MonoBehaviour
     {
-        public CItem(string szName, string szDescription, ItemGroup_e eItemGroup, int nFunFactor,
+        private static readonly string[] m_szNames =
+        {
+            "Carrot",
+            "Shovel",
+            "Shield",
+            "Coat of Arms",
+            "Beer Mug",
+            "Apple",
+            "Book",
+            "Hammer"
+        };
+        
+        public CItem(string szDescription, ItemGroup_e eItemGroup, int nFunFactor,
             int nOffensiveFactor, int nSelfDepravation)
         {
-            m_szName = szName;
+            m_szName = m_szNames[Random.Range(0, m_szNames.Length+1)];
             m_szDescription = szDescription;
             m_nFunFactor = nFunFactor;
             m_nOffensiveFactor = nOffensiveFactor;
@@ -26,9 +38,9 @@ namespace ItemSystem
         /// <param name="szName">Name of the item</param>
         /// <param name="szDescription">Description of the item</param>
         /// <returns></returns>
-        public static CItem item(string szName, string szDescription, ItemGroup_e eGroup)
+        public static CItem item(string szDescription, ItemGroup_e eGroup)
         {
-            return new CItem(szName, szDescription, eGroup, 0, 0, 0);
+            return new CItem(szDescription, eGroup, 0, 0, 0);
         }
         
         public string name()
