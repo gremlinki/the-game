@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
     GameManager gameManager;
 
     // list z opisami itemów
-    bool isListOpen = true;
+    public GameObject GO_ListItems;
+    [SerializeField]
+    private ListLogic ListItems;
 
     new Rigidbody2D rigidbody;
     private static readonly int Direction = Animator.StringToHash("direction"),
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
         rigidbody.freezeRotation = true;
 
         pickupWindow = gameManager.pickupWindow;
+
+        ListItems = GO_ListItems.GetComponent<ListLogic>();
     }
 
     private void Update()
@@ -48,9 +52,9 @@ public class Player : MonoBehaviour
         if (Input.anyKey)
         {
             // On any key input && if list open == true zamyka list 'bezpowrotnie'
-            if (isListOpen == true)
+            if (ListItems.isListOpen == true)
             {
-                isListOpen = false;
+                ListItems.isListOpen = false;
             }
         }
     }
@@ -59,7 +63,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Movement:
-        if (isListOpen == false)
+        if (ListItems.isListOpen == false)
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
