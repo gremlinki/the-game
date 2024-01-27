@@ -29,5 +29,13 @@ namespace ItemSystem
         [SerializeField] private ItemGroup_e m_eItemGroup = ItemGroup_e.KING;
         private CItem m_pItem;
         public int m_nFF, m_nOF, m_nSD;
+        public int KingNumber, NobleNumber, PSYNumber;
+
+        void Start(){
+            KingNumber = m_nFF * (m_eItemGroup == ItemGroup_e.KING ? 1 : -1);
+            NobleNumber = m_nFF * (m_eItemGroup == ItemGroup_e.ROYALTY ? 1 : -1);
+            PSYNumber = m_nSD;
+        }
+
     }
 }
