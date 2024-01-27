@@ -30,10 +30,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            // Is the player near an item?
             if (currentItem)
             {
                 Debug.Log("Item picked up");
-                gameManager.InventoryManager.addItem(currentItem.item());
+                gameManager.InventoryManager.addItem(currentItem.item(), 0); // <-- TO CHANGE, currently picks up to slot zero
                 Destroy(currentItem.gameObject);
                 currentItem = null;
             }
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Movement:
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
         input = input.normalized;
@@ -51,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CItem item = collision.gameObject.GetComponent<CItemWrapper>();
+        CItemWrapper item = collision.gameObject.GetComponent<CItemWrapper>();
         if (!item)
             return;
 

@@ -55,7 +55,7 @@ namespace ItemSystem
         public CItem(ItemGroup_e eItemGroup, int nFunFactor,
             int nOffensiveFactor, int nSelfDepravation)
         {
-            ItemDefinition_t def = m_szNames[Random.Range(0, m_szNames.Capacity)];
+            ItemDefinition_t def = m_szNames[Random.Range(0, m_szNames.Count)];
             m_szName = def.name;
             m_szDescription = def.description;
             m_nFunFactor = nFunFactor;
