@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlTypes;
 
 namespace ItemSystem
 {
@@ -13,13 +14,11 @@ namespace ItemSystem
             return m_pItems;
         }
 
-        public void addItem(CItem pItem)
+        public void addItem(CItem pItem, int nSlot)
         {
-            for (int i = 0; i < MAX_SLOT; i++)
-            {
-                if (m_pItems[i] != null) continue;
-                m_pItems[i] = pItem.copy();
-            }
+            // Slot already occupied
+            if (m_pItems[nSlot] != null) return;
+            m_pItems[nSlot] = pItem.copy();
         }
 
         public void removeItem(int nSlot)
@@ -30,7 +29,7 @@ namespace ItemSystem
 
         public CItem getItem(int nSlot)
         {
-            if (nSlot >= MAX_SLOT) return null;
+            if (nSlot < 0 || nSlot >= MAX_SLOT) return null;
             m_nCurrentSlot = nSlot;
             return m_pItems[nSlot];
         }
