@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public CInventoryManager InventoryManager { get; private set; }
+    public Player player;
+    public GameObject pickupWindow;
     
     private GameManager()
     {
@@ -19,6 +21,18 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (!player)
+        {
+            Debug.Log("No player was provided to Game Manager.");
+        }
+        if (!pickupWindow)
+        {
+            Debug.Log("PickupWindow wasn't provided to Game Manager.");
         }
     }
 }
