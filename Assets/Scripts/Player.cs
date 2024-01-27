@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ItemSystem;
 
@@ -13,6 +10,9 @@ public class Player : MonoBehaviour
     CItemWrapper currentItem; // Current item the player is looking at
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
+
+    // list z opisami itemów
+    bool isListOpen = true;
 
     new Rigidbody2D rigidbody;  
 
@@ -35,9 +35,18 @@ public class Player : MonoBehaviour
             if (currentItem)
             {
                 Debug.Log("Item picked up");
-                gameManager.InventoryManager.addItem(currentItem.item(), 0); // <-- TO CHANGE, currently picks up to slot zero
+                gameManager.InventoryManager.addItem(currentItem.item);
                 Destroy(currentItem.gameObject);
                 currentItem = null;
+            }
+        }
+
+        if (Input.anyKey)
+        {
+            // On any key input && if list open == true zamyka list 'bezpowrotnie'
+            if (isListOpen == true)
+            {
+                isListOpen = false;
             }
         }
     }
@@ -46,10 +55,13 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Movement:
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
-        input = input.normalized;
-        rigidbody.velocity = input * movementSpeed;
+        if (isListOpen == false)
+        {
+            input.x = Input.GetAxisRaw("Horizontal");
+            input.y = Input.GetAxisRaw("Vertical");
+            input = input.normalized;
+            rigidbody.velocity = input * movementSpeed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

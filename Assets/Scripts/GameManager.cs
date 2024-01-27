@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
 
     public CInventoryManager InventoryManager { get; private set; }
     public RelationManager relationManager { get; private set; }
+    public ItemManager ItemManager { get; private set; }
+
     public Player player;
+    [SerializeField] private ItemDefinition[] itemDefs;
     public GameObject pickupWindow; // The window that pops up when player gets near an item
 
     public GameState gameState = GameState.PAUSED;
@@ -25,11 +28,6 @@ public class GameManager : MonoBehaviour
     public int day = 1;
     private CItem[] items;
     
-    private GameManager()
-    {
-        InventoryManager = new CInventoryManager();
-        relationManager = new RelationManager();
-    }
 
     private void Awake()
     {
@@ -39,6 +37,10 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        
+        InventoryManager = new CInventoryManager();
+        ItemManager = new ItemManager(itemDefs);
+        relationManager = new RelationManager();
     }
 
     private void Start()
