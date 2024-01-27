@@ -24,7 +24,7 @@ public class scr_Torch : MonoBehaviour
     {
         for (; ; ) //this is while(true)
         {
-            float randomIntensity = Random.Range(0.5f, 0.55f);
+            float randomIntensity = Random.Range(0.4f, 0.55f);
             flickerLightComponent.intensity = randomIntensity;
 
 
