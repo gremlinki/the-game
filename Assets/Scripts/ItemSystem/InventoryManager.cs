@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlTypes;
+using UnityEngine;
 
 namespace ItemSystem
 {
@@ -18,6 +19,7 @@ namespace ItemSystem
             // Slot already occupied
             if (m_pItems[nSlot] != null) return false;
             m_pItems[nSlot] = pItem.copy();
+            GameObject.Destroy(pItem.parent);
             return true;
         }
 
@@ -30,8 +32,7 @@ namespace ItemSystem
             for (int i = 0; i < MAX_SLOT; i++)
             {
                 if (m_pItems[i] != null) continue;
-                m_pItems[i] = pItem;
-                return true;
+                return addItem(pItem, i);
             }
 
             return false;

@@ -161,8 +161,22 @@ namespace ItemSystem
             }
         }
 
+        public GameObject parent
+        {
+            get
+            {
+                return m_pParent;
+            }
+
+            set
+            {
+                m_pParent = value;
+            }
+        }
+
         private string m_szName, m_szDescription;
         private int m_nFunFactor, m_nOffensiveFactor, m_nSelfDepravation;
         private ItemGroup_e m_eGroup;
+        private GameObject m_pParent;
     }
 }
