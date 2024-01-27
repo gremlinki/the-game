@@ -41,15 +41,15 @@ namespace ItemSystem
     {
         private static readonly List<ItemDefinition_t> m_szNames = new List<ItemDefinition_t>()
         {
-            new ItemDefinition_t("Carrot", ""),
-            new ItemDefinition_t("Shovel", ""),
-            new ItemDefinition_t("Sword", ""),
-            new ItemDefinition_t("Shield", ""),
-            new ItemDefinition_t("Coat of Arms", ""),
-            new ItemDefinition_t("Beer Mug", ""),
-            new ItemDefinition_t("Apple", ""),
-            new ItemDefinition_t("Book", ""),
-            new ItemDefinition_t("Hammer", "")
+            new ItemDefinition_t("Carrot", "Great source of vitamins, indispensable part of snowman."),
+            new ItemDefinition_t("Shovel", "Perfect tool to dig out some graves for your opponents."),
+            new ItemDefinition_t("Sword", "Sometimes it's short, sometimes it's long, but always deadly. Ideal addition to your throne room."),
+            new ItemDefinition_t("Shield", "Big, bulky, round object used mainly for defence. If you got hungry on the battlefield, you can use it as plate."),
+            new ItemDefinition_t("Coat of Arms", "Colourfull, shiny shield that depicts the glory of Kingdom of Podolskho."),
+            new ItemDefinition_t("Beer Mug", "Big wooden mug, full of delicious monk-made wheat beer."),
+            new ItemDefinition_t("Apple", "Great for bow shooting competitions as a target, but it's main purpose is being delicious fruit with lots of sweetenes."),
+            new ItemDefinition_t("Book", "Sheets of processed cellulose stuck in beetween two big sheets of cow's skin. Source of wisdom, sorcery and other kinds of wealthy's nobels whim."),
+            new ItemDefinition_t("Hammer", "Construction tool, big toy for big boys. Main intend was to nail nails, but you can get absolute creative with this tool. Beware: Do not combine with sickle.")
         };
         
         public CItem(ItemGroup_e eItemGroup, int nFunFactor,
@@ -161,8 +161,22 @@ namespace ItemSystem
             }
         }
 
+        public GameObject parent
+        {
+            get
+            {
+                return m_pParent;
+            }
+
+            set
+            {
+                m_pParent = value;
+            }
+        }
+
         private string m_szName, m_szDescription;
         private int m_nFunFactor, m_nOffensiveFactor, m_nSelfDepravation;
         private ItemGroup_e m_eGroup;
+        private GameObject m_pParent;
     }
 }
