@@ -7,6 +7,7 @@ using ItemSystem;
 public class ListLogic : MonoBehaviour
 {
     public bool isListOpen = true;
+    public GameObject ListOBJ;
     public Player MC;
 
     GameManager gameManager;
@@ -40,6 +41,13 @@ public class ListLogic : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if(isListOpen == true){
+            ListOBJ.SetActive(true);
+        }
+        else {
+            ListOBJ.SetActive(false);
         }
     }
 
