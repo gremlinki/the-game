@@ -18,7 +18,7 @@ namespace ItemSystem
             for (int i = 0; i < MAX_SLOT; i++)
             {
                 if (m_pItems[i] != null) continue;
-                m_pItems[i] = pItem;
+                m_pItems[i] = pItem.copy();
             }
         }
 

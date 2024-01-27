@@ -31,46 +31,100 @@ namespace ItemSystem
             m_nOffensiveFactor = nOffensiveFactor;
             m_nSelfDepravation = nSelfDepravation;
         }
-
-        /// <summary>
-        /// Create an item with provided name and description
-        /// </summary>
-        /// <param name="szName">Name of the item</param>
-        /// <param name="szDescription">Description of the item</param>
-        /// <returns></returns>
-        public static CItem item(string szDescription, ItemGroup_e eGroup)
+        
+        public CItem(string szName, string szDescription, ItemGroup_e eItemGroup, int nFunFactor,
+            int nOffensiveFactor, int nSelfDepravation)
         {
-            return new CItem(szDescription, eGroup, 0, 0, 0);
+            m_szName = szName;
+            m_szDescription = szDescription;
+            m_nFunFactor = nFunFactor;
+            m_nOffensiveFactor = nOffensiveFactor;
+            m_nSelfDepravation = nSelfDepravation;
+        }
+
+        public CItem copy()
+        {
+            GameObject obj = Instantiate(gameObject);
+            CItem itm = obj.AddComponent<CItem>();
+            return itm;
         }
         
-        public string name()
+        public string name
         {
-            return m_szName;
+            get
+            {
+                return m_szName;
+            }
+
+            set
+            {
+                m_szName = value;
+            }
         }
 
-        public string description()
+        public string description
         {
-            return m_szDescription;
+            get
+            {
+                return m_szDescription;
+            }
+
+            set
+            {
+                m_szDescription = value;
+            }
         }
 
-        public int funFactor()
+        public int funFactor
         {
-            return m_nFunFactor;
+            get
+            {
+                return m_nFunFactor;
+            }
+
+            set
+            {
+                m_nFunFactor = value;
+            }
         }
 
-        public int offensiveFactor()
+        public int offensiveFactor
         {
-            return m_nOffensiveFactor;
+            get
+            {
+                return m_nOffensiveFactor;
+            }
+
+            set
+            {
+                m_nOffensiveFactor = value;
+            }
         }
 
-        public int selfDepravation()
+        public int selfDepravation
         {
-            return m_nSelfDepravation;
+            get
+            {
+                return m_nSelfDepravation;
+            }
+
+            set
+            {
+                m_nSelfDepravation = value;
+            }
         }
 
-        public ItemGroup_e group()
+        public ItemGroup_e group
         {
-            return m_eGroup;
+            get
+            {
+                return m_eGroup;
+            }
+
+            set
+            {
+                m_eGroup = value;
+            }
         }
 
         private string m_szName, m_szDescription;
