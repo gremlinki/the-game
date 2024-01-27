@@ -4,9 +4,10 @@ using ItemSystem;
 public class Player : MonoBehaviour
 {
     Vector3 input; // The axis for movement input [wsad]
-    float movementSpeed = 10;
+    [SerializeField] private float movementSpeed = 10f;
 
     [SerializeField] Collider2D itemPickupArea;
+    private Animator pomniAnimator;
     CItemWrapper currentItem; // Current item the player is looking at
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
@@ -14,13 +15,16 @@ public class Player : MonoBehaviour
     // list z opisami itemów
     bool isListOpen = true;
 
-    new Rigidbody2D rigidbody;  
+    new Rigidbody2D rigidbody;
+    private static readonly int Direction = Animator.StringToHash("direction"),
+        Velocity = Animator.StringToHash("moving");
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.instance;
 
+        pomniAnimator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.freezeRotation = true;
 
@@ -61,6 +65,15 @@ public class Player : MonoBehaviour
             input.y = Input.GetAxisRaw("Vertical");
             input = input.normalized;
             rigidbody.velocity = input * movementSpeed;
+
+            if (rigidbody.velocity.x < 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, -1f);
+            else if (rigidbody.velocity.x > 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, 1f);
+            else if (rigidbody.velocity.x < 0) pomniAnimator.SetFloat(Direction, -1f);
+            else if (rigidbody.velocity.x > 0) pomniAnimator.SetFloat(Direction, 1f);
+            else pomniAnimator.SetFloat(Direction, -1f);
+            
+            if (rigidbody.velocity.x != 0 || rigidbody.velocity.y != 0) pomniAnimator.SetBool(Velocity, true);
+            else pomniAnimator.SetBool(Velocity, false);
         }
     }
 
