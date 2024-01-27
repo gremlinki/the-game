@@ -6,13 +6,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public CInventoryManager InventoryManager { get; private set; }
+    public ItemManager ItemManager { get; private set; }
     public Player player;
     public GameObject pickupWindow;
-    
-    private GameManager()
-    {
-        InventoryManager = new CInventoryManager();
-    }
+
+    [SerializeField] private ItemDefinition[] itemDefs;
 
     private void Awake()
     {
@@ -22,6 +20,9 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        
+        InventoryManager = new CInventoryManager();
+        ItemManager = new ItemManager(itemDefs);
     }
 
     private void Start()

@@ -19,6 +19,7 @@ namespace ItemSystem
             // Slot already occupied
             if (m_pItems[nSlot] != null) return false;
             m_pItems[nSlot] = pItem.copy();
+            Debug.Log($"Adding {pItem} to slot {nSlot}");
             GameObject.Destroy(pItem.parent);
             return true;
         }
@@ -37,7 +38,7 @@ namespace ItemSystem
 
             return false;
         }
-
+        
         public bool removeItem(int nSlot)
         {
             if (nSlot < 0 || nSlot >= MAX_SLOT) return false;

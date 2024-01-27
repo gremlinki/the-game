@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ItemSystem;
 
@@ -10,6 +7,7 @@ public class Player : MonoBehaviour
     float movementSpeed = 10;
 
     [SerializeField] Collider2D itemPickupArea;
+    [SerializeField] private Camera camera;
     CItemWrapper currentItem; // Current item the player is looking at
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
@@ -38,7 +36,7 @@ public class Player : MonoBehaviour
             if (currentItem)
             {
                 Debug.Log("Item picked up");
-                gameManager.InventoryManager.addItem(currentItem.item(), 0); // <-- TO CHANGE, currently picks up to slot zero
+                gameManager.InventoryManager.addItem(currentItem.item);
                 Destroy(currentItem.gameObject);
                 currentItem = null;
             }

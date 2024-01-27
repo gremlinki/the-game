@@ -5,15 +5,25 @@ namespace ItemSystem
 {
     public class CItemWrapper : MonoBehaviour
     {
-        public CItem item()
+        public CItem item
         {
-            return m_pItem;
+            get
+            {
+                return m_pItem;
+            }
+
+            set
+            {
+                m_pItem = value;
+            }
         }
 
-        private void Awake()
+        public void init(ItemID_e allowedItems)
         {
-            // TODO: Figure out how to initialize attributes ~GabrielV
-            m_pItem = new CItem(m_eItemGroup, 0, 0, 0);
+            ItemDefinition def = GameManager.instance.ItemManager.getRandomItem(allowedItems);
+            CItem item = new CItem(def, m_eItemGroup, 0, 0, 0);
+            m_pItem = item;
+            GetComponent<SpriteRenderer>().sprite = def.icon;
         }
 
         [SerializeField] private ItemGroup_e m_eItemGroup = ItemGroup_e.KING;
