@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
         currentItem = item;
         pickupWindow.SetActive(true);
-        pickupWindow.transform.position = collision.gameObject.transform.position + new Vector3(0, 1, 0);
+        pickupWindow.transform.position = collision.gameObject.transform.position + new Vector3(0, 0.7f, 0);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
