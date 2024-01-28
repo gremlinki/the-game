@@ -4,12 +4,10 @@ using UnityEngine;
 
 
 public class scr_Torch : MonoBehaviour{
-
-    Transform flickerLight;
     UnityEngine.Rendering.Universal.Light2D flickerLightComponent;
 
     void Start(){
-        flickerLightComponent = flickerLight.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        flickerLightComponent = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
 
         StartCoroutine(Timer());
     }
