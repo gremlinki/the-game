@@ -29,17 +29,24 @@ namespace ItemSystem
             ItemDefinition def = GameManager.instance.ItemManager.getRandomItem(allowedItems);
             int kf, nf, js;
 
-            kf = Random.Range(0, values.Length);
-            nf = Random.Range(0, values.Length);
-            js = Random.Range(0, values.Length);
+            kf = values[Random.Range(0, values.Length)];
+            nf = values[Random.Range(0, values.Length)];
+            js = values[Random.Range(0, values.Length)];
             
             CItem item = new CItem(def, m_eItemGroup, kf, nf, js);
             m_pItem = item;
             GetComponent<SpriteRenderer>().sprite = def.icon;
+            NumberAssingner(kf,nf,js);
         }
 
         [SerializeField] private ItemGroup_e m_eItemGroup = ItemGroup_e.KING;
         private CItem m_pItem;
         public int KingNumber, NobleNumber, PSYNumber;
+
+        void NumberAssingner(int KingF, int NobleF, int JesterS){
+            KingNumber = KingF;
+            NobleNumber = NobleF;
+            PSYNumber = JesterS;
+        }
     }
 }

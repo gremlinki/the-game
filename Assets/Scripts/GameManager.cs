@@ -12,6 +12,11 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    public Animator animK;
+    public Animator animR;
+    public Animator animN;
+    public Animator animB;
+
     public static GameManager instance;
 
     public CInventoryManager InventoryManager { get; private set; }
@@ -79,6 +84,10 @@ public class GameManager : MonoBehaviour
                     StartSpectacle();
                     break;
                 }
+                else if(InventoryManager.m_pItems[3] != null){
+                    StartSpectacle();
+                    break;
+                }
                 break;
             case GameState.SPECTACLE:
                 // Spectacle logic here?
@@ -93,6 +102,13 @@ public class GameManager : MonoBehaviour
                     relationManager.mentalHealth += item.JesterFactor;
                     Performence.AutomaticAfflictionSlider();
                     relationManager.UpdateLevels();
+                    //Trigger react emojis
+                    if(item.group == ItemGroup_e.KING){
+                        animK.SetInteger("KingLike", 1);
+                        animN.SetInteger("NobelLike", 2);
+                        animR.SetInteger("RussLike", 2);
+                        animB.SetInteger("BlackLike", 2);
+                    }
                 }
                 
                 spectacleCounter++;
@@ -110,7 +126,6 @@ public class GameManager : MonoBehaviour
 
     public void StartSpectacle()
     {
-        // <-- Load Spectacle scene here
         gameState = GameState.SPECTACLE;
     }
 
@@ -118,7 +133,6 @@ public class GameManager : MonoBehaviour
     {
         day++;
         spectacleCounter = 0;
-        // <-- Display some notes and summary of day here
     }
 
     public void PlayEnding(string name)
