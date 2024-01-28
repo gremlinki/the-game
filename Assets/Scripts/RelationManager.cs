@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RelationManager
 {
-    public int kingAffinity;      // If any of these drop to 0, it's game over
-    public int nobillityAffinity; // If we reach 100 the levels increase
-    public int mentalHealth;      //
+    public int kingAffinity = 50;      // If any of these drop to 0, it's game over
+    public int nobillityAffinity = 50; // If we reach 100 the levels increase
+    public int mentalHealth = 50;      //
 
     public int kingLevel;        // If we raise the levels, we get bonuses
     public int nobillityLevel;   //
