@@ -27,13 +27,9 @@ namespace ItemSystem
         public void init(ItemID_e allowedItems)
         {
             ItemDefinition def = GameManager.instance.ItemManager.getRandomItem(allowedItems);
-            int kf, nf, js;
 
-            kf = Random.Range(0, values.Length);
-            nf = Random.Range(0, values.Length);
-            js = Random.Range(0, values.Length);
-            
-            CItem item = new CItem(def, m_eItemGroup, kf, nf, js);
+            int[] stats = generateItemStats();
+            CItem item = new CItem(def, m_eItemGroup, stats[0], stats[1], stats[2]);
             m_pItem = item;
             GetComponent<SpriteRenderer>().sprite = def.icon;
         }
@@ -41,5 +37,40 @@ namespace ItemSystem
         [SerializeField] private ItemGroup_e m_eItemGroup = ItemGroup_e.KING;
         private CItem m_pItem;
         public int KingNumber, NobleNumber, PSYNumber;
+
+        public int[] generateItemStats()
+        {
+            int minModifier = 0, maxModifier = 0;
+            int rand = Random.Range(0, 7);
+            int king = values[rand];
+
+            if (rand < 4)
+                minModifier = 5 - rand;
+            else
+                maxModifier = rand - 5;
+
+            rand = Random.Range(minModifier, 7 - maxModifier);
+            int nobillity = values[rand];
+
+            if (rand < 4)
+            {
+                minModifier += 5 - rand;
+                maxModifier += rand - 5;
+                if (maxModifier < 0)
+                    maxModifier = 0;
+            }
+            else
+            {
+                maxModifier += rand - 5;
+                minModifier += 5 - rand;
+                if (minModifier < 0)
+                    minModifier = 0;
+            }
+
+            rand = Random.Range(minModifier, 7 - maxModifier);
+            int sanity = values[rand];
+
+            return new int[]{king, nobillity, sanity};
+        }
     }
 }
