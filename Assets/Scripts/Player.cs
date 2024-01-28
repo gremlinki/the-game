@@ -1,3 +1,4 @@
+using Dbg;
 using UnityEngine;
 using ItemSystem;
 
@@ -16,6 +17,8 @@ public class Player : MonoBehaviour
     public GameObject GO_ListItems;
     [SerializeField]
     private ListLogic ListItems;
+
+    [SerializeField] private DebugConsole console;
 
     new Rigidbody2D rigidbody;
     private static readonly int Direction = Animator.StringToHash("direction"),
@@ -49,6 +52,11 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Tilde))
+        {
+            console.Toggle();
+        }
+
         if (Input.anyKey)
         {
             // On any key input && if list open == true zamyka list 'bezpowrotnie'
@@ -63,7 +71,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Movement:
-        if (ListItems.isListOpen == false)
+        if (ListItems.isListOpen == false && !console.isVisible())
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
