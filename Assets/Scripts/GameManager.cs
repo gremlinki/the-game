@@ -1,4 +1,5 @@
 using ItemSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,12 +20,15 @@ public class GameManager : MonoBehaviour
     public Performence Performence { get; private set; }
     public ItemManager ItemManager { get; private set; }
 
+    private AudioSource audioSource;
+    public AudioClip[] sounds;
+
     [SerializeField] private ItemDefinition[] itemDefs;
     private CItem[] items;
 
     public Player player;
     public GameObject pickupWindow; // The window that pops up when player gets near an item
-    public GameState gameState = GameState.PAUSED; // Current state of game
+    public GameState gameState = GameState.IDLE; // Current state of game
 
     private float timer;
     private int spectacleCounter = 0;
@@ -48,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         if (!player)
         {
             Debug.Log("No player was provided to Game Manager.");
@@ -58,6 +64,10 @@ public class GameManager : MonoBehaviour
         }
 
         items = InventoryManager.items();
+
+        audioSource.clip = sounds[0];
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     private void Update()
@@ -123,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayEnding(string name)
     {
+        audioSource.Stop();
         switch(name)
         {
             case "king_win":
