@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     public CInventoryManager InventoryManager { get; private set; }
     public RelationManager relationManager { get; private set; }
+    public Performence Performence { get; private set; }
     public ItemManager ItemManager { get; private set; }
 
     [SerializeField] private ItemDefinition[] itemDefs;
@@ -88,8 +89,9 @@ public class GameManager : MonoBehaviour
                 foreach (CItem item in items)
                 {
                     relationManager.kingAffinity += item.funFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
-                    relationManager.nobillityAffinity += item.offensiveFactor * (item.group == ItemGroup_e.ROYALTY ? 1 : -1);
+                    relationManager.nobillityAffinity += item.offensiveFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
                     relationManager.mentalHealth += item.selfDepravation;
+                    Performence.AutomaticAfflictionSlider();
                     relationManager.UpdateLevels();
                 }
                 
