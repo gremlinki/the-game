@@ -1,23 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using ItemSystem;
 using UnityEngine;
 
 public class NameChanger : MonoBehaviour
 {
-    public Sprite[] SPR;
-    public string[] STR;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private ItemDefinition[] defs;
 
     // Update is called once per frame
     void Update()
     {
         for(int i = 0; i < 9; i++){
-            if(gameObject.GetComponent<SpriteRenderer>().sprite == SPR[i]){
-                gameObject.name = STR[i];
+            if(gameObject.GetComponent<SpriteRenderer>().sprite == defs[i].icon){
+                gameObject.name = defs[i].name;
             }
         }
     }

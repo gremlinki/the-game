@@ -88,9 +88,9 @@ public class GameManager : MonoBehaviour
                 // Each item's values get added to corresponding stats
                 foreach (CItem item in items)
                 {
-                    relationManager.kingAffinity += item.funFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
-                    relationManager.nobillityAffinity += item.offensiveFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
-                    relationManager.mentalHealth += item.selfDepravation;
+                    relationManager.kingAffinity += item.KingFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
+                    relationManager.nobillityAffinity += item.RoyaltyFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
+                    relationManager.mentalHealth += item.JesterFactor;
                     Performence.AutomaticAfflictionSlider();
                     relationManager.UpdateLevels();
                 }

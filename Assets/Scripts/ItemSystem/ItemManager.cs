@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Util;
 
@@ -25,6 +26,13 @@ namespace ItemSystem
                 ItemDefinition def = getRandomItem();
                 if (BitUtil.hasFlags((int)def.id, (int)include)) return def;
             }
+        }
+
+        public ItemDefinition getItem(string name)
+        {
+            foreach (ItemDefinition def in itemDefinitions) if (def.name == name) return def;
+
+            return itemDefinitions[0];
         }
     }
 }

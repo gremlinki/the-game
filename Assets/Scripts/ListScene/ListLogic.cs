@@ -18,51 +18,100 @@ public class ListLogic : MonoBehaviour
     public GameObject[] Krol_Items = new GameObject[three];
     public GameObject[] Psycha_Items = new GameObject[three];
     public GameObject[] ItemsOnMap;
-    public string[] ItemNames = new string[9]; //{"Carrot","Shovel","Sword","Shield","Coat of Arms","Beer Mug","Apple","Book","Hammer"};
-    public Sprite[] ItemRELNames = new Sprite[0];
+
+    public ItemDefinition[] ItemDefinitions;
+
+    public Sprite SPRnone;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.instance;
         itemList = gameManager.InventoryManager.items();
-
-        if (ItemsOnMap == null)
-            ItemsOnMap = GameObject.FindGameObjectsWithTag("Item");
+        ItemsOnMap = GameObject.FindGameObjectsWithTag("Item");
+        //Debug.Log(ItemNames.Length);
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i <= ItemsOnMap.Length; i++){
-            for(int j = 0; j <= ItemNames.Length; j++){
-                for(int o = 0; o <= ItemNames.Length; o++){
-                    if(ItemsOnMap[i] != null){
-                        itemTxtLoader(ItemsOnMap[i].name, ItemNames[j], 1, 0, 0, Szlachta_Items, ItemRELNames[o]);
-                    }
-                }
+        for (int i = 0; i < ItemsOnMap.Length; i++)
+        {
+            if (ItemsOnMap[i] != null)
+            {
+                CItemWrapper wrapper = ItemsOnMap[i].GetComponent<CItemWrapper>();
+                itemTxtLoader(ItemsOnMap[i].name, GameManager.instance.ItemManager.getItem(ItemsOnMap[i].name),
+                    wrapper.NobleNumber, wrapper.KingNumber, wrapper.PSYNumber);
             }
         }
 
-        if(isListOpen == true){
+        if (isListOpen == true)
+        {
             ListOBJ.SetActive(true);
         }
-        else {
+        else
+        {
             ListOBJ.SetActive(false);
         }
     }
 
-    void itemTxtLoader(string x, string accualX,int SzlachtaOPT, int KingOPT, int MentalOPT, GameObject[] y, Sprite accualIMG){
-        foreach(GameObject obj in y){
-            if (x == accualX){
-                if(SzlachtaOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
-                }
-                if(KingOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
-                }
-                if(MentalOPT > 0){
-                    obj.GetComponent<Image>().sprite = accualIMG;
-                }
+    void itemTxtLoader(string name, ItemDefinition def, int SzlachtaOPT, int KingOPT, int MentalOPT)
+    {
+        if (name != def.name) return;
+        if (SzlachtaOPT > 0)
+        {
+            if (Szlachta_Items[0].GetComponent<Image>().sprite == SPRnone)
+            {
+                Szlachta_Items[0].GetComponent<Image>().sprite = def.icon;
+            }
+            else if (Szlachta_Items[1].GetComponent<Image>().sprite == SPRnone &&
+                     Szlachta_Items[0].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Szlachta_Items[1].GetComponent<Image>().sprite =  def.icon;
+            }
+            else if (Szlachta_Items[2].GetComponent<Image>().sprite == SPRnone &&
+                     Szlachta_Items[0].GetComponent<Image>().sprite !=  def.icon &&
+                     Szlachta_Items[1].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Szlachta_Items[2].GetComponent<Image>().sprite =  def.icon;
+            }
+        }
+
+        if (KingOPT > 0)
+        {
+            if (Krol_Items[0].GetComponent<Image>().sprite == SPRnone)
+            {
+                Krol_Items[0].GetComponent<Image>().sprite =  def.icon;
+            }
+            else if (Krol_Items[1].GetComponent<Image>().sprite == SPRnone &&
+                     Krol_Items[0].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Krol_Items[1].GetComponent<Image>().sprite =  def.icon;
+            }
+            else if (Krol_Items[2].GetComponent<Image>().sprite == SPRnone &&
+                     Krol_Items[0].GetComponent<Image>().sprite !=  def.icon &&
+                     Krol_Items[1].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Krol_Items[2].GetComponent<Image>().sprite =  def.icon;
+            }
+        }
+
+        if (MentalOPT > 0)
+        {
+            if (Psycha_Items[0].GetComponent<Image>().sprite == SPRnone)
+            {
+                Psycha_Items[0].GetComponent<Image>().sprite =  def.icon;
+            }
+            else if (Psycha_Items[1].GetComponent<Image>().sprite == SPRnone &&
+                     Psycha_Items[0].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Psycha_Items[1].GetComponent<Image>().sprite =  def.icon;
+            }
+            else if (Psycha_Items[2].GetComponent<Image>().sprite == SPRnone &&
+                     Psycha_Items[0].GetComponent<Image>().sprite !=  def.icon &&
+                     Psycha_Items[1].GetComponent<Image>().sprite !=  def.icon)
+            {
+                Psycha_Items[2].GetComponent<Image>().sprite =  def.icon;
             }
         }
     }
