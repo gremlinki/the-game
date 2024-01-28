@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ca628a00001c492f96dea80fcacf446c, type: 3}
   m_Name: apple
   m_EditorClassIdentifier: Assembly-CSharp:ItemSystem:ItemDefinition
   icon: {fileID: 21300000, guid: e5b9551b42445014dab9639877500c24, type: 3}
   id: 64
   data:
     name: Apple
-    description: Great for bow shooting competitions as a target, but it's main purpose
-      is being delicious fruit with lots of sweetenes.
+    description: great for bow shooting competitions as a target, but it's main purpose
+      is being a delicious fruit with lots of sweetens.

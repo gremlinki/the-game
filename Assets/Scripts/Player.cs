@@ -1,31 +1,42 @@
+using Dbg;
 using UnityEngine;
 using ItemSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     Vector3 input; // The axis for movement input [wsad]
-    float movementSpeed = 10;
+    [SerializeField] private float movementSpeed = 3f;
 
     [SerializeField] Collider2D itemPickupArea;
-    [SerializeField] private Camera camera;
+    private Animator pomniAnimator;
     CItemWrapper currentItem; // Current item the player is looking at
     GameObject pickupWindow; // The window that pops up when player gets near item
     GameManager gameManager;
 
     // list z opisami itemów
-    bool isListOpen = true;
+    public GameObject GO_ListItems;
+    [SerializeField]
+    private ListLogic ListItems;
 
-    new Rigidbody2D rigidbody;  
+    new Rigidbody2D rigidbody;
+    private static readonly int Direction = Animator.StringToHash("direction"),
+        Velocity = Animator.StringToHash("moving");
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.instance;
 
+        pomniAnimator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.freezeRotation = true;
 
-        pickupWindow = gameManager.pickupWindow;
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.GAME)
+        {
+            pickupWindow = gameManager.pickupWindow;
+            ListItems = GO_ListItems.GetComponent<ListLogic>();
+        }
     }
 
     private void Update()
@@ -41,27 +52,43 @@ public class Player : MonoBehaviour
                 currentItem = null;
             }
         }
+
         if (Input.anyKey)
         {
-            // On any key input && if list open == true zamyka list 'bezpowrotnie'
-            if (isListOpen == true)
-            {
-                isListOpen = false;
+            if(SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.GAME){
+                // On any key input && if list open == true zamyka list 'bezpowrotnie'
+                if (ListItems.isListOpen == true)
+                {
+                    ListItems.isListOpen = false;
+                }
             }
+
         }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Movement:
-        if (isListOpen == false)
-        {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
-            input = input.normalized;
-            rigidbody.velocity = input * movementSpeed;
+        if(SceneManager.GetActiveScene().buildIndex != (int)SceneLoader.EScene.SPECTACLE){
+            //Movement:
+            if (ListItems.isListOpen == false)
+            {
+                input.x = Input.GetAxisRaw("Horizontal");
+                input.y = Input.GetAxisRaw("Vertical");
+                input = input.normalized;
+                rigidbody.velocity = input * movementSpeed;
+
+                if (rigidbody.velocity.x < 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, -1f);
+                else if (rigidbody.velocity.x > 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, 1f);
+                else if (rigidbody.velocity.x < 0) pomniAnimator.SetFloat(Direction, -1f);
+                else if (rigidbody.velocity.x > 0) pomniAnimator.SetFloat(Direction, 1f);
+                else pomniAnimator.SetFloat(Direction, -1f);
+                
+                if (rigidbody.velocity.x != 0 || rigidbody.velocity.y != 0) pomniAnimator.SetBool(Velocity, true);
+                else pomniAnimator.SetBool(Velocity, false);
+            }
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -71,7 +98,7 @@ public class Player : MonoBehaviour
 
         currentItem = item;
         pickupWindow.SetActive(true);
-        pickupWindow.transform.position = collision.gameObject.transform.position + new Vector3(0, 1, 0);
+        pickupWindow.transform.position = collision.gameObject.transform.position + new Vector3(0, 0.7f, 0);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ca628a00001c492f96dea80fcacf446c, type: 3}
   m_Name: hammer
   m_EditorClassIdentifier: Assembly-CSharp:ItemSystem:ItemDefinition
   icon: {fileID: 21300000, guid: 1f35e71613ab43642b9d2f4722bb91ce, type: 3}
   id: 256
   data:
     name: Hammer
-    description: 'Construction tool, big toy for big boys. Main intend was to nail
-      nails, but you can get absolute creative with this tool. Beware: Do not combine
+    description: 'Construction tool, big toy for big boys. The main intend was to
+      nail, but you can get absolute creative with this tool. Beware: Do not combine
       with sickle.'

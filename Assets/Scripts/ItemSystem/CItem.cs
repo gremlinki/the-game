@@ -22,7 +22,22 @@ namespace ItemSystem
         BEERMUG = 1 << 5,
         APPLE = 1 << 6,
         BOOK = 1 << 7,
-        HAMMER = 1 << 8
+        HAMMER = 1 << 8,
+        KEBAB = 1 << 9,
+    }
+    
+    public enum itemid_e
+    {
+        CARROT = 1 << 0,
+        SHOVEL = 1 << 1,
+        SWORD = 1 << 2,
+        SHIELD = 1 << 3,
+        COATOFARMS = 1 << 4,
+        BEERMUG = 1 << 5,
+        APPLE = 1 << 6,
+        BOOK = 1 << 7,
+        HAMMER = 1 << 8,
+        KEBAB = 1 << 9,
     }
     
     [Serializable]
@@ -40,35 +55,35 @@ namespace ItemSystem
 
     public class CItem
     {
-        public CItem(ItemGroup_e eItemGroup, int nFunFactor,
-            int nOffensiveFactor, int nSelfDepravation)
+        public CItem(ItemGroup_e eItemGroup, int nKingFactor,
+            int nRoyaltyFactor, int nJesterFactor)
         {
             m_pItemDef = GameManager.instance.ItemManager.getRandomItem();
-            m_nFunFactor = nFunFactor;
-            m_nOffensiveFactor = nOffensiveFactor;
-            m_nSelfDepravation = nSelfDepravation;
+            m_nKingFactor = nKingFactor;
+            m_nRoyaltyFactor = nRoyaltyFactor;
+            m_nJesterFactor = nJesterFactor;
             m_eGroup = eItemGroup;
         }
 
-        public CItem(ItemDefinition def, ItemGroup_e eItemGroup, int nFunFactor,
-            int nOffensiveFactor, int nSelfDepravation)
+        public CItem(ItemDefinition def, ItemGroup_e eItemGroup, int nKingFactor,
+            int nRoyaltyFactor, int nJesterFactor)
         {
             m_pItemDef = def;
-            m_nFunFactor = nFunFactor;
-            m_nOffensiveFactor = nOffensiveFactor;
-            m_nSelfDepravation = nSelfDepravation;
+            m_nKingFactor = nKingFactor;
+            m_nRoyaltyFactor = nRoyaltyFactor;
+            m_nJesterFactor = nJesterFactor;
         }
         
         public CItem(CItem obj)
         {
             m_pItemDef = obj.m_pItemDef;
             m_pParent = obj.parent;
-            m_nFunFactor = obj.funFactor;
-            m_nOffensiveFactor = obj.offensiveFactor;
-            m_nSelfDepravation = obj.selfDepravation;
+            m_nKingFactor = obj.KingFactor;
+            m_nRoyaltyFactor = obj.RoyaltyFactor;
+            m_nJesterFactor = obj.JesterFactor;
             m_eGroup = obj.group;
         }
-
+        
         public override string ToString()
         {
             return $"{name()} {description()} {group} {m_pItemDef.id}";
@@ -98,42 +113,42 @@ namespace ItemSystem
             return m_pItemDef.data.description;
         }
 
-        public int funFactor
+        public int KingFactor
         {
             get
             {
-                return m_nFunFactor;
+                return m_nKingFactor;
             }
 
             set
             {
-                m_nFunFactor = value;
+                m_nKingFactor = value;
             }
         }
 
-        public int offensiveFactor
+        public int RoyaltyFactor
         {
             get
             {
-                return m_nOffensiveFactor;
+                return m_nRoyaltyFactor;
             }
 
             set
             {
-                m_nOffensiveFactor = value;
+                m_nRoyaltyFactor = value;
             }
         }
 
-        public int selfDepravation
+        public int JesterFactor
         {
             get
             {
-                return m_nSelfDepravation;
+                return m_nJesterFactor;
             }
 
             set
             {
-                m_nSelfDepravation = value;
+                m_nJesterFactor = value;
             }
         }
 
@@ -164,7 +179,7 @@ namespace ItemSystem
         }
 
         private ItemDefinition m_pItemDef;
-        private int m_nFunFactor, m_nOffensiveFactor, m_nSelfDepravation;
+        private int m_nKingFactor, m_nRoyaltyFactor, m_nJesterFactor;
         private ItemGroup_e m_eGroup;
         private GameObject m_pParent;
     }
