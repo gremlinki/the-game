@@ -7,7 +7,7 @@ namespace ItemSystem
     public class CInventoryManager
     {
         private const int MAX_SLOT = 3;
-        private CItem[] m_pItems = new CItem[MAX_SLOT];
+        public CItem[] m_pItems = new CItem[MAX_SLOT];
         
         public CItem[] items()
         {

@@ -1,6 +1,7 @@
 using Dbg;
 using UnityEngine;
 using ItemSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -32,8 +33,9 @@ public class Player : MonoBehaviour
         rigidbody.freezeRotation = true;
 
         pickupWindow = gameManager.pickupWindow;
-
-        ListItems = GO_ListItems.GetComponent<ListLogic>();
+        if(SceneManager.GetActiveScene().name != "Spectacle"){
+            ListItems = GO_ListItems.GetComponent<ListLogic>();
+        }
     }
 
     private void Update()
@@ -52,34 +54,40 @@ public class Player : MonoBehaviour
 
         if (Input.anyKey)
         {
-            // On any key input && if list open == true zamyka list 'bezpowrotnie'
-            if (ListItems.isListOpen == true)
-            {
-                ListItems.isListOpen = false;
+            if(SceneManager.GetActiveScene().name != "Spectacle"){
+                // On any key input && if list open == true zamyka list 'bezpowrotnie'
+                if (ListItems.isListOpen == true)
+                {
+                    ListItems.isListOpen = false;
+                }
             }
+
         }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Movement:
-        if (ListItems.isListOpen == false)
-        {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
-            input = input.normalized;
-            rigidbody.velocity = input * movementSpeed;
+        if(SceneManager.GetActiveScene().name != "Spectacle"){
+            //Movement:
+            if (ListItems.isListOpen == false)
+            {
+                input.x = Input.GetAxisRaw("Horizontal");
+                input.y = Input.GetAxisRaw("Vertical");
+                input = input.normalized;
+                rigidbody.velocity = input * movementSpeed;
 
-            if (rigidbody.velocity.x < 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, -1f);
-            else if (rigidbody.velocity.x > 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, 1f);
-            else if (rigidbody.velocity.x < 0) pomniAnimator.SetFloat(Direction, -1f);
-            else if (rigidbody.velocity.x > 0) pomniAnimator.SetFloat(Direction, 1f);
-            else pomniAnimator.SetFloat(Direction, -1f);
-            
-            if (rigidbody.velocity.x != 0 || rigidbody.velocity.y != 0) pomniAnimator.SetBool(Velocity, true);
-            else pomniAnimator.SetBool(Velocity, false);
+                if (rigidbody.velocity.x < 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, -1f);
+                else if (rigidbody.velocity.x > 0 && rigidbody.velocity.y != 0) pomniAnimator.SetFloat(Direction, 1f);
+                else if (rigidbody.velocity.x < 0) pomniAnimator.SetFloat(Direction, -1f);
+                else if (rigidbody.velocity.x > 0) pomniAnimator.SetFloat(Direction, 1f);
+                else pomniAnimator.SetFloat(Direction, -1f);
+                
+                if (rigidbody.velocity.x != 0 || rigidbody.velocity.y != 0) pomniAnimator.SetBool(Velocity, true);
+                else pomniAnimator.SetBool(Velocity, false);
+            }
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
