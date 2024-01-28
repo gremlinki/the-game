@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     public RelationManager relationManager { get; private set; }
     public Performence Performence { get; private set; }
     public ItemManager ItemManager { get; private set; }
-
-    private AudioSource audioSource;
+    
+    public AudioSource audioSource;
     public AudioClip[] sounds;
 
     [SerializeField] private ItemDefinition[] itemDefs;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public Player player;
     public GameObject pickupWindow; // The window that pops up when player gets near an item
-    public GameState gameState = GameState.IDLE; // Current state of game
+    public GameState gameState = GameState.GATHERING; // Current state of game
 
     private float timer;
     private int spectacleCounter = 0;
@@ -77,6 +77,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.ENDING) return;
+        
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.SPECTACLE)
+        {
+            animK = GameObject.FindWithTag("king").GetComponent<Animator>();
+            animN = GameObject.FindWithTag("noble").GetComponent<Animator>();
+            animB = GameObject.FindWithTag("blacknoble").GetComponent<Animator>();
+            animR = GameObject.FindWithTag("russ").GetComponent<Animator>();
+            Performence = GameObject.FindWithTag("Respawn").GetComponent<Performence>();
+        }
+        
         switch (gameState)
         {
             case GameState.PAUSED:
@@ -88,13 +99,7 @@ public class GameManager : MonoBehaviour
                     AdvanceDay();
                 break;
             case GameState.GATHERING:
-                timer -= Time.deltaTime;
-                if (timer < 0)
-                {
-                    StartSpectacle();
-                    break;
-                }
-                else if(InventoryManager.m_pItems[3] != null){
+                if(InventoryManager.items()[2] != null){
                     StartSpectacle();
                     break;
                 }
@@ -110,7 +115,7 @@ public class GameManager : MonoBehaviour
                     relationManager.kingAffinity += item.KingFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
                     relationManager.nobillityAffinity += item.RoyaltyFactor * (item.group == ItemGroup_e.KING ? 1 : -1);
                     relationManager.mentalHealth += item.JesterFactor;
-                    Performence.AutomaticAfflictionSlider();
+                    Performence.AutomaticAfflictionSlider();    
                     relationManager.UpdateLevels();
                     //Trigger react emojis
                     if(item.group == ItemGroup_e.KING){
@@ -129,14 +134,15 @@ public class GameManager : MonoBehaviour
 
     public void StartGathering()
     {
-        SceneManager.LoadScene("Main Game");
         gameState = GameState.GATHERING;
         timer = 30;
+        SceneLoader.LoadScene(SceneLoader.EScene.GAME, new SceneLoader.SceneCallback_t());
     }
 
     public void StartSpectacle()
     {
         gameState = GameState.SPECTACLE;
+        SceneLoader.LoadScene(SceneLoader.EScene.SPECTACLE, new SceneLoader.SceneCallback_t());
     }
 
     public void AdvanceDay()
@@ -151,16 +157,22 @@ public class GameManager : MonoBehaviour
         switch(name)
         {
             case "king_win":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.KING_WIN));
                 break;
             case "king_lose":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.KING_LOSE));
                 break;
             case "nobillity_win":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.NOBILLITY_WIN));
                 break;
             case "nobillity_lose":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.NOBILLITY_LOSE));
                 break;
             case "jester_win":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.JESTER_WIN));
                 break;
             case "jester_lose":
+                SceneLoader.LoadScene(SceneLoader.EScene.ENDING, new SceneLoader.SceneCallback_t((int)EndingManager.Ending_t.JESTER_LOSE));
                 break;
         }
 

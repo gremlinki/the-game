@@ -32,8 +32,9 @@ public class Player : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.freezeRotation = true;
 
-        pickupWindow = gameManager.pickupWindow;
-        if(SceneManager.GetActiveScene().name != "Spectacle"){
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.GAME)
+        {
+            pickupWindow = gameManager.pickupWindow;
             ListItems = GO_ListItems.GetComponent<ListLogic>();
         }
     }
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
 
         if (Input.anyKey)
         {
-            if(SceneManager.GetActiveScene().name != "Spectacle"){
+            if(SceneManager.GetActiveScene().buildIndex == (int)SceneLoader.EScene.GAME){
                 // On any key input && if list open == true zamyka list 'bezpowrotnie'
                 if (ListItems.isListOpen == true)
                 {
@@ -68,7 +69,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(SceneManager.GetActiveScene().name != "Spectacle"){
+        if(SceneManager.GetActiveScene().buildIndex != (int)SceneLoader.EScene.SPECTACLE){
             //Movement:
             if (ListItems.isListOpen == false)
             {
